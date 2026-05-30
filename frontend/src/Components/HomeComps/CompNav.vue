@@ -1,58 +1,27 @@
 <script setup>
 import { ref } from 'vue'
-import Button from '../../Widgets/Button.vue'
+import Icon from '../../Widgets/Icon.vue'
 
 const open = ref(false)
-
-const items = [
-  { label: 'Github', href: '#' },
-  { label: 'Signup', href: '/signup' },
-  { label: 'Login', href: '/login', primary: true }
-]
-
-function toggleMenu() {
-  open.value = !open.value
-}
 </script>
 
 <template>
-  <div class="w-fit flex flex-col items-center gap-2 md:flex-row md:justify-end md:gap-4">
-
-    <div class="w-fit md:hidden"><Button
-      class="w-full"
-      @click="toggleMenu"
+  <div class="md:hidden">
+    <button
+      @click="open = !open"
+      class="w-10 h-10 flex items-center justify-center bg-white/5 border border-white/10 text-white"
       :aria-expanded="open"
     >
-      Menu
-    </Button></div>
+      <Icon :name="open ? 'x' : 'menu'" size="20"/>
+    </button>
 
     <div
-      :class="[
-        'w-full flex flex-col gap-2',
-        'md:w-auto md:flex md:flex-row md:items-center md:gap-4',
-        open ? 'flex' : 'hidden md:flex'
-      ]"
-      @click="open = false"
+      v-if="open"
+      class="absolute top-full left-0 right-0 bg-[#071427]/95 backdrop-blur-xl border-b border-white/10 p-4 space-y-2"
     >
-      <a
-        v-for="item in items"
-        :key="item.label"
-        :href="item.href"
-        :class="[
-          'w-full text-center px-4 py-3 transition-colors duration-200 no-underline',
-          'md:w-auto',
-          item.primary
-            ? 'bg-cyan-500 text-slate-950 font-medium'
-            : 'bg-white/15 text-white hover:text-white border border-white/10 md:border-none'
-        ]"
-      >
-        {{ item.label }}
-      </a>
+      <a href="#features" class="block px-4 py-3 text-slate-300 hover:text-cyan-400 hover:bg-white/5 transition-colors">Features</a>
+      <a href="#dashboard" class="block px-4 py-3 text-slate-300 hover:text-cyan-400 hover:bg-white/5 transition-colors">Dashboard</a>
+      <a href="#analytics" class="block px-4 py-3 text-slate-300 hover:text-cyan-400 hover:bg-white/5 transition-colors">Analytics</a>
     </div>
-
   </div>
 </template>
-
-<style scoped>
-@reference "tailwindcss";
-</style>

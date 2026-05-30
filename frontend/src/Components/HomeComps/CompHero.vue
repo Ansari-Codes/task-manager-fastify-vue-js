@@ -1,74 +1,100 @@
 <script setup>
-import LinkButton from '../../Widgets/LinkButton.vue';
-import CompGlitchTitle from '../CompGlitchTitle.vue';
-
-const title = 'TaskManager — sharp, reliable'
-const subtitle = 'A flat, modern task system built for focus and velocity.'
+import LinkButton from '../../Widgets/LinkButton.vue'
+import Icon from '../../Widgets/Icon.vue'
+import AnimatedGrid from '../../Widgets/AnimatedGrid.vue'
 </script>
 
 <template>
-  <section class="hero-section relative overflow-hidden py-18 px-8 lg:py-11 lg:px-5 md:py-7 md:px-4 border-b border-(--primary)">
-    <div class="grid grid-cols-1 gap-8 max-w-7xl mx-auto items-start lg:grid-cols-[1.3fr_1fr] lg:gap-6.5">
-      <div class="flex flex-col gap-3">
-        <div class="uppercase tracking-widest text-sky-300 text-xs">fast system</div>
-        <CompGlitchTitle class="text-[clamp(2.8rem,4vw,4.4rem)] leading-tight m-0 font-bold" text="TaskManager" />
-        <p class="text-slate-300 max-w-130 leading-loose lg:text-sm">A clean task manager for sharp teams and solo
-          workflows. Minimal interface, strong signals, and flat system styling.</p>
+  <section class="relative min-h-screen flex items-center overflow-hidden pt-20">
+    <AnimatedGrid />
 
-        <div class="grid grid-cols-2 gap-2 w-full lg:w-64">
-          <LinkButton to="/login" variant="primary" class="w-full">Login</LinkButton>
-          <LinkButton to="/signup" class="w-full">Signup</LinkButton>
+    <!-- Floating orbs -->
+    <div class="absolute top-1/4 left-1/4 w-72 h-72 bg-cyan-500/10 rounded-full blur-[100px] animate-pulse"/>
+    <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-indigo-500/10 rounded-full blur-[120px] animate-pulse" style="animation-delay: 1s"/>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-125 h-125 bg-cyan-400/5 rounded-full blur-[150px]"/>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-6 md:px-4 py-1 w-full">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div class="space-y-8">
+
+          <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-[1.1]">
+            Task Management<br/>
+            <span class="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-indigo-400">Reimagined</span>
+          </h1>
+
+          <p class="text-slate-400 text-lg md:text-xl max-w-lg leading-relaxed">
+            A serious task system for students and fast workers. Categories, statuses, 
+            analytics, and a dedicated trash folder — everything you need, nothing you don't.
+          </p>
+
+          <div class="flex flex-wrap gap-4">
+            <LinkButton to="/signup" variant="primary" class="text-base px-8 py-3.5">
+              Start Free
+              <Icon name="arrow-right" size="16" class="ml-2"/>
+            </LinkButton>
+            <LinkButton to="#features" class="text-base" :router_link="false">
+              See Features
+            </LinkButton>
+          </div>
+
+          <div class="flex items-center gap-6 pt-4">
+            <div class="flex items-center gap-2 text-slate-500 text-sm">
+              <Icon name="check" size="16" class="text-cyan-400"/>
+              Free forever
+            </div>
+            <div class="flex items-center gap-2 text-slate-500 text-sm">
+              <Icon name="check" size="16" class="text-cyan-400"/>
+              No credit card
+            </div>
+            <div class="flex items-center gap-2 text-slate-500 text-sm">
+              <Icon name="check" size="16" class="text-cyan-400"/>
+              Open source
+            </div>
+          </div>
         </div>
-      </div>
 
-      <div class="flex flex-col gap-4.5 border border-(--primary)">
-        <div class="bg-white/3 border border-white/8 p-6">
-          <div class="text-white font-bold mb-4.5">System panel</div>
-          <div class="flex justify-between py-3.5 border-b border-(--primary) text-slate-400 last:border-0">
-            Tasks processed<span class="text-white font-bold">24</span>
-          </div>
-          <div class="flex justify-between py-3.5 border-b border-(--primary) text-slate-400 last:border-0">
-            Active sessions<span class="text-white font-bold">8</span>
-          </div>
-          <div class="flex justify-between py-3.5 border-b border-(--primary) text-slate-400 last:border-0">
-            Sync status<span class="text-white font-bold">Online</span>
+        <!-- Right: Dashboard Preview -->
+        <div class="relative">
+          <div class="absolute -inset-4 bg-linear-to-r from-cyan-500/20 to-indigo-500/20 blur-2xl opacity-50"/>
+          <div class="relative bg-[#0f172a] border border-white/10 rounded-lg overflow-hidden shadow-2xl shadow-cyan-500/10">
+            <div class="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-white/2">
+              <div class="w-3 h-3 rounded-full bg-red-500/60"/>
+              <div class="w-3 h-3 rounded-full bg-yellow-500/60"/>
+              <div class="w-3 h-3 rounded-full bg-green-500/60"/>
+              <div class="ml-4 text-xs text-slate-600 font-mono">taskmanager.app/dashboard</div>
+            </div>
+            <div class="p-6 space-y-4">
+              <div class="flex items-center justify-between">
+                <div class="text-white font-semibold">Today's Tasks</div>
+                <div class="text-cyan-400 text-sm font-mono">24 active</div>
+              </div>
+              <div class="space-y-2">
+                <div v-for="i in 4" :key="i" class="flex items-center gap-3 p-3 bg-white/3 border border-white/5 rounded hover:border-cyan-500/30 transition-colors">
+                  <div class="w-4 h-4 border border-cyan-500/40 rounded-sm" :class="i === 1 ? 'bg-cyan-500/20' : ''"/>
+                  <div class="flex-1">
+                    <div class="text-slate-300 text-sm" :class="i === 1 ? 'line-through text-slate-600' : ''">
+                      {{ ['Review physics notes', 'Submit CS assignment', 'Team sync at 3PM', 'Grocery run'][i-1] }}
+                    </div>
+                  </div>
+                  <div class="text-xs px-2 py-0.5 rounded" :class="[
+                    i === 1 ? 'bg-green-500/10 text-green-400' : 
+                    i === 2 ? 'bg-yellow-500/10 text-yellow-400' : 
+                    'bg-cyan-500/10 text-cyan-400'
+                  ]">
+                    {{ ['Done', 'In Progress', 'Pending', 'Later'][i-1] }}
+                  </div>
+                </div>
+              </div>
+              <div class="flex gap-2 pt-2">
+                <div class="h-1.5 flex-1 bg-cyan-500/20 rounded-full overflow-hidden">
+                  <div class="h-full bg-cyan-500 rounded-full" style="width: 65%"/>
+                </div>
+                <span class="text-xs text-slate-500">65%</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </section>
 </template>
-
-<style scoped>
-@reference "tailwindcss";
-
-.hero-section {
-  background: radial-gradient(circle at top left, rgba(20, 255, 255, 0.14), transparent 22%),
-    radial-gradient(circle at 80% 20%, rgba(99, 102, 241, 0.16), transparent 24%),
-    linear-gradient(180deg, #071427 0%, #081b33 42%, #081f3f 100%);
-}
-
-.hero-section::before,
-.hero-section::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
-.hero-section::before {
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-  background-size: 48px 48px;
-  opacity: 0.35;
-  transform: translateZ(0);
-}
-
-.hero-section::after {
-  background: radial-gradient(circle at 25% 15%, rgba(56, 189, 248, 0.24), transparent 14%),
-    radial-gradient(circle at 72% 22%, rgba(168, 85, 247, 0.18), transparent 12%),
-    radial-gradient(circle at 50% 85%, rgba(34, 211, 238, 0.12), transparent 16%);
-  opacity: 0.95;
-}
-</style>

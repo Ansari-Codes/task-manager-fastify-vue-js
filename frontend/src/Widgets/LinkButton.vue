@@ -13,13 +13,17 @@ const props = defineProps({
   active_class: {
     type: String,
     default: ''
+  },
+  router_link: {
+    type: Boolean,
+    default: true
   }
 })
 const variants = ['primary', 'secondary']
 </script>
 
 <template>
-  <RouterLink :to="to" custom v-slot="{ navigate, isActive }">
+  <RouterLink :to="to" v-if="router_link" custom v-slot="{ navigate, isActive }">
     <button type="button" @click="navigate" :class="[
       'btn w-full',
       variants.includes(variant)
@@ -30,6 +34,17 @@ const variants = ['primary', 'secondary']
       <slot />
     </button>
   </RouterLink>
+  <a v-else :href="to" class="w-full">
+    <button type="button" @click="navigate" :class="[
+      'btn w-full',
+      variants.includes(variant)
+        ? `btn-${variant}`
+        : ''
+    ]">
+      <slot />
+    </button>
+  </a>
+
 </template>
 
 

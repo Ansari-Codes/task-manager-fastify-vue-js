@@ -1,0 +1,21 @@
+<svg viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="180" height="140" rx="8" fill="#0f172a" stroke="#1e293b" stroke-width="1.5"/>
+  <rect x="25" y="25" width="150" height="30" rx="4" fill="#1e293b" opacity="0.5"/>
+  <circle cx="42" cy="40" r="6" fill="#22c55e">
+    <animate attributeName="opacity" values="1;0.4;1" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <rect x="58" y="36" width="70" height="5" rx="2" fill="#475569"/>
+  <rect x="58" y="44" width="40" height="3" rx="1" fill="#334155"/>
+  <rect x="25" y="65" width="150" height="30" rx="4" fill="#1e293b" opacity="0.5"/>
+  <circle cx="42" cy="80" r="6" fill="#f59e0b">
+    <animate attributeName="opacity" values="1;0.4;1" dur="2.5s" repeatCount="indefinite"/>
+  </circle>
+  <rect x="58" y="76" width="70" height="5" rx="2" fill="#475569"/>
+  <rect x="58" y="84" width="40" height="3" rx="1" fill="#334155"/>
+  <rect x="25" y="105" width="150" height="30" rx="4" fill="#1e293b" opacity="0.5"/>
+  <circle cx="42" cy="120" r="6" fill="#ef4444">
+    <animate attributeName="opacity" values="1;0.4;1" dur="3s" repeatCount="indefinite"/>
+  </circle>
+  <rect x="58" y="116" width="70" height="5" rx="2" fill="#475569"/>
+  <rect x="58" y="124" width="40" height="3" rx="1" fill="#334155"/>
+</svg>
