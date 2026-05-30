@@ -93,7 +93,7 @@ watch(() => props.modelValue, (isOpen) => {
             </div>
 
             <!-- Actions -->
-            <div class="mt-auto pt-6 flex gap-3 border-t border-white/10">
+            <div class="mt-auto flex justify-between border border-(--primary)">
                 <Button variant="ghost" class="flex-1" @click="resetFilters">
                     Reset
                 </Button>

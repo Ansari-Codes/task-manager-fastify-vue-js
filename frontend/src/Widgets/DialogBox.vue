@@ -147,15 +147,14 @@ function startResize(e) {
 .overlay {
   position: fixed;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(2px);
+  background-color: rgba(14, 13, 13, 0.5);
   z-index: 40;
 }
 
 /* Base Dialog Styles */
 .dialog {
   position: fixed;
-  background: #0f172a;
+  background: #161616;
   color: #f8fafc;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
   z-index: 50;
@@ -191,7 +190,7 @@ function startResize(e) {
 }
 
 .resizer-line {
-  background-color: transparent;
+  background-color: var(--primary);
   transition: background-color 0.2s ease;
 }
 

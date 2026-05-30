@@ -197,7 +197,7 @@ async function handleSubmit() {
 
                 <Input id="task-deadline" type="date" label="Deadline" v-model="formData.deadline" :disabled="isSubmitting" />
 
-                <div class="mt-auto pt-6 flex gap-4">
+                <div class="mt-auto flex border border-(--primary)">
                     <Button variant="secondary" class="flex-1"
                         @click="$emit('update:modelValue', false)" :disabled="isSubmitting">Cancel</Button>
                     <Button variant="primary" type="submit" class="flex-1" :disabled="!formData.title || isSubmitting">

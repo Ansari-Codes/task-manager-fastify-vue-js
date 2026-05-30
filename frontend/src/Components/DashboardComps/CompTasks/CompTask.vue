@@ -28,7 +28,6 @@ function handleContextMenu(event) {
     menuOpen.value = true
 }
 
-// Click outside handler
 function handleClickOutside(event) {
     if (cardRef.value && !cardRef.value.contains(event.target)) {
         closeMenu()
@@ -43,26 +42,23 @@ onUnmounted(() => {
     document.removeEventListener('click', handleClickOutside)
 })
 
-// Truncate description to first 80 chars
 function truncateDesc(desc) {
     if (!desc) return 'No description provided.'
     return desc.length > 80 ? desc.slice(0, 80) + '...' : desc
 }
 
-// Status badge config
 function getStatusConfig(status) {
     const configs = {
-        'pending': { label: '⌚ Pending', bg: 'bg-yellow-500/20', text: 'text-yellow-500', border: 'border-yellow-500/30' },
-        'in_progress': { label: '🏃‍♀️ In Progress', bg: 'bg-blue-500/20', text: 'text-blue-500', border: 'border-blue-500/30' },
+        'pending': { label: '⌛ Pending', bg: 'bg-yellow-500/20', text: 'text-yellow-500', border: 'border-yellow-500/30' },
+        'in_progress': { label: '📈 In Progress', bg: 'bg-blue-500/20', text: 'text-blue-500', border: 'border-blue-500/30' },
         'done': { label: '✔ Done', bg: 'bg-green-500/20', text: 'text-green-500', border: 'border-green-500/30' },
         'completed': { label: '✔ Done', bg: 'bg-green-500/20', text: 'text-green-500', border: 'border-green-500/30' },
         'cancelled': { label: '❌ Cancelled', bg: 'bg-red-500/20', text: 'text-red-500', border: 'border-red-500/30' },
-        'trashed': { label: 'Trashed', bg: 'bg-gray-500/10', text: 'text-gray-500', border: 'border-gray-500/20' }
+        'trashed': { label: '🗑️ In Trash', bg: 'bg-gray-500/10', text: 'text-gray-500', border: 'border-gray-500/20' }
     }
     return configs[status] || { label: status, bg: 'bg-gray-500/10', text: 'text-gray-500', border: 'border-gray-500/20' }
 }
 
-// Priority badge config — same color scheme as status
 function getPriorityConfig(priority) {
     const configs = {
         'optional': { label: '🛌 Optional', bg: 'bg-gray-500/10', text: 'text-gray-500', border: 'border-gray-500/20' },
@@ -74,57 +70,83 @@ function getPriorityConfig(priority) {
     return configs[priority] || { label: priority, bg: 'bg-gray-500/10', text: 'text-gray-500', border: 'border-gray-500/20' }
 }
 
-// Format deadline
+// Border colors for card — full opacity for visibility
+function getPriorityBorderClass(priority) {
+    const borders = {
+        'optional': 'border-gray-500!',
+        'low': 'border-green-500!',
+        'medium': 'border-blue-500!',
+        'high': 'border-red-500!',
+        'critical': 'border-red-600!'
+    }
+    return borders[priority] || 'border-gray-500'
+}
+
+// Card background: critical gets translucent red, overdue gets translucent yellow
+function getCardBgClass(task) {
+    // Critical priority → translucent red bg
+    if (task.priority === 'critical') {
+        return 'bg-red-900!'
+    }
+    // Overdue → translucent yellow bg
+    if (isOverdue(task.deadline)) {
+        return 'bg-yellow-100/10!'
+    }
+    return 'bg-transparent'
+}
+
+function isOverdue(deadline) {
+    if (!deadline) return false
+    return new Date(deadline) < new Date()
+}
+
 function formatDeadline(deadline) {
     if (!deadline) return null
     const date = new Date(deadline)
     const now = new Date()
-    const isOverdue = date < now
+    const overdue = date < now
     return {
         text: date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
-        isOverdue
+        overdue
     }
 }
 </script>
 
 <template>
     <div ref="cardRef" class="relative">
-        <Card 
-            class="border border-(--primary)! bg-transparent! hover:bg-(--primary)/5! transition-colors duration-150 rounded-none"
+        <Card
+            class="border-2 rounded-none transition-colors duration-150"
+            :class="[
+                getPriorityBorderClass(task.priority),
+                getCardBgClass(task)
+            ]"
             @contextmenu="handleContextMenu"
-            @mouseleave="closeMenu"
-        >
+            @mouseleave="closeMenu">
+
             <!-- Three-dot menu toggle -->
             <div class="absolute top-2 right-2 z-10">
-                <button 
-                    class="text-(--secondary)/60 hover:text-(--primary) p-1 transition-colors"
-                    @click.stop="toggleMenu"
-                >
+                <button class="text-(--secondary)/60 hover:text-(--primary) p-1 transition-colors"
+                    @click.stop="toggleMenu">
                     ⋮
                 </button>
 
                 <!-- Dropdown menu -->
-                <div 
-                    v-if="menuOpen" 
-                    class="absolute right-0 mt-1 w-32 bg-black border border-(--primary)/40 shadow-lg overflow-hidden z-20"
-                >
-                    <button 
+                <div v-if="menuOpen"
+                    class="absolute right-0 mt-1 w-32 bg-black border border-(--primary)/40 shadow-lg overflow-hidden z-20">
+                    <button
                         class="w-full px-3 py-2 text-left text-sm text-white hover:bg-(--primary)/20 hover:text-(--primary) transition-colors flex items-center gap-2"
-                        @click="$emit('view', task); closeMenu()"
-                    >
+                        @click="$emit('view', task); closeMenu()">
                         👁 View
                     </button>
-                    <button 
+                    <button
                         class="w-full px-3 py-2 text-left text-sm text-white hover:bg-(--primary)/20 hover:text-(--primary) transition-colors flex items-center gap-2"
-                        @click="$emit('edit', task); closeMenu()"
-                    >
+                        @click="$emit('edit', task); closeMenu()">
                         ✏ Edit
                     </button>
                     <div class="border-t border-(--primary)/20"></div>
-                    <button 
+                    <button
                         class="w-full px-3 py-2 text-left text-sm text-white hover:bg-(--secondary)/20 hover:text-(--secondary) transition-colors flex items-center gap-2"
-                        @click="$emit('trash', task.id); closeMenu()"
-                    >
+                        @click="$emit('trash', task.id); closeMenu()">
                         🗑 Trash
                     </button>
                 </div>
@@ -135,16 +157,12 @@ function formatDeadline(deadline) {
                 <div class="pr-6">
                     <div class="flex items-center gap-2 flex-wrap mb-2">
                         <h3 class="text-sm font-bold text-(--primary) uppercase tracking-wide">{{ task.title }}</h3>
-                        <span 
-                            class="text-[10px] px-1.5 py-0.5 border font-semibold uppercase tracking-wider"
-                            :class="[getStatusConfig(task.status).bg, getStatusConfig(task.status).text, getStatusConfig(task.status).border]"
-                        >
+                        <span class="text-[10px] px-1.5 py-0.5 border font-semibold uppercase tracking-wider"
+                            :class="[getStatusConfig(task.status).bg, getStatusConfig(task.status).text, getStatusConfig(task.status).border]">
                             {{ getStatusConfig(task.status).label }}
                         </span>
-                        <span 
-                            class="text-[10px] px-1.5 py-0.5 border font-semibold uppercase tracking-wider"
-                            :class="[getPriorityConfig(task.priority).bg, getPriorityConfig(task.priority).text, getPriorityConfig(task.priority).border]"
-                        >
+                        <span class="text-[10px] px-1.5 py-0.5 border font-semibold uppercase tracking-wider"
+                            :class="[getPriorityConfig(task.priority).bg, getPriorityConfig(task.priority).text, getPriorityConfig(task.priority).border]">
                             {{ getPriorityConfig(task.priority).label }}
                         </span>
                     </div>
@@ -162,10 +180,10 @@ function formatDeadline(deadline) {
             <template #footer>
                 <div class="mt-3 pt-2 border-t border-(--secondary) flex items-center gap-1.5 text-xs">
                     <template v-if="formatDeadline(task.deadline)">
-                        <span :class="formatDeadline(task.deadline).isOverdue ? 'text-white' : 'text-white/50'">
+                        <span :class="formatDeadline(task.deadline).overdue ? 'text-yellow-400 font-bold' : 'text-white'">
                             📅 {{ formatDeadline(task.deadline).text }}
                         </span>
-                        <span v-if="formatDeadline(task.deadline).isOverdue" class="text-white font-bold">
+                        <span v-if="formatDeadline(task.deadline).overdue" class="text-yellow-400 font-bold">
                             OVERDUE
                         </span>
                     </template>

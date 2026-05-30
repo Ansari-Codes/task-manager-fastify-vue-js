@@ -7,6 +7,10 @@ const props = defineProps({
     task: {
         type: Object,
         default: null
+    },
+    isEditable: {
+        type: Boolean,
+        default: true
     }
 })
 
@@ -19,7 +23,7 @@ function formatStatus(status) {
         'done': 'Done',
         'cancelled': 'Cancelled',
         'completed': 'Completed',
-        'trashed': 'Trashed'
+        'trashed': 'In Trash'
     }
     return map[status] || status
 }
@@ -32,12 +36,12 @@ function formatPriority(priority) {
 // Status badge config
 function getStatusConfig(status) {
     const configs = {
-        'pending': { label: '⌚ Pending', bg: 'bg-yellow-500/20', text: 'text-yellow-500', border: 'border-yellow-500/30' },
-        'in_progress': { label: '🏃‍♀️ In Progress', bg: 'bg-blue-500/20', text: 'text-blue-500', border: 'border-blue-500/30' },
+        'pending': { label: '⌛ Pending', bg: 'bg-yellow-500/20', text: 'text-yellow-500', border: 'border-yellow-500/30' },
+        'in_progress': { label: '📈 In Progress', bg: 'bg-blue-500/20', text: 'text-blue-500', border: 'border-blue-500/30' },
         'done': { label: '✔ Done', bg: 'bg-green-500/20', text: 'text-green-500', border: 'border-green-500/30' },
         'completed': { label: '✔ Done', bg: 'bg-green-500/20', text: 'text-green-500', border: 'border-green-500/30' },
         'cancelled': { label: '❌ Cancelled', bg: 'bg-red-500/20', text: 'text-red-500', border: 'border-red-500/30' },
-        'trashed': { label: 'Trashed', bg: 'bg-gray-500/10', text: 'text-gray-500', border: 'border-gray-500/20' }
+        'trashed': { label: '🗑️ In Trash', bg: 'bg-gray-500/10', text: 'text-gray-500', border: 'border-gray-500/20' }
     }
     return configs[status] || { label: status, bg: 'bg-gray-500/10', text: 'text-gray-500', border: 'border-gray-500/20' }
 }
@@ -135,22 +139,22 @@ function formatDeadline(dateString) {
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="text-(--primary) text-xs font-semibold uppercase tracking-wider">Created</label>
-                        <p class="text-white/70 text-sm mt-1">📅 {{ formatDate(task.created_at) }}</p>
+                        <p class="text-white text-sm mt-1">📅 {{ formatDate(task.created_at) }}</p>
                     </div>
 
                     <div>
                         <label class="text-(--primary) text-xs font-semibold uppercase tracking-wider">Last Updated</label>
-                        <p class="text-white/70 text-sm mt-1">📅 {{ formatDate(task.updated_at) }}</p>
+                        <p class="text-white text-sm mt-1">📅 {{ formatDate(task.updated_at) }}</p>
                     </div>
                 </div>
             </div>
 
             <!-- Actions -->
-            <div class="flex gap-3 mt-2 pt-4 border-t border-(--secondary)">
+            <div class="flex gap-3 mt-2 pt-4 border-t border-(--primary)">
                 <Button variant="secondary" class="flex-1" @click="$emit('update:modelValue', false)">
                     Close
                 </Button>
-                <Button variant="primary" class="flex-1" @click="$emit('edit', task); $emit('update:modelValue', false)">
+                <Button v-if="isEditable" variant="primary" class="flex-1" @click="$emit('edit', task); $emit('update:modelValue', false)">
                     ✏ Edit
                 </Button>
             </div>
