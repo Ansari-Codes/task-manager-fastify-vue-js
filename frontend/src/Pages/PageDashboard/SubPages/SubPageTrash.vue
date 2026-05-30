@@ -144,7 +144,7 @@ function titlize(str) {
 
         <div v-if="visibleTasks.length > 0" class="mt-4">
             <DataTable :data="visibleTasks" :columns="['title', 'priority', 'updated_at', 'actions']"
-                @rowClick="handleViewTask">
+                :columnClasses="{ updated_at: 'hidden md:table-cell' }" @rowClick="handleViewTask">
                 <template #title="{ row }">
                     <span class="font-medium text-slate-100">{{ titlize(row.title) }}</span>
                 </template>
@@ -155,12 +155,13 @@ function titlize(str) {
                     </span>
                 </template>
                 <template #updated_at="{ row }">
-                    <span class="text-slate-300 text-sm">{{ formatDate(row.updated_at) }}</span>
+                    <span>{{ formatDate(row.updated_at) }}</span>
                 </template>
                 <template #actions="{ row }">
                     <div class="flex gap-2">
-                        <Button variant="ghost" size="sm" @click.stop="handleRestore(row.id)">Restore</Button>
-                        <Button variant="danger" size="sm" @click.stop="handleDelete(row.id)">Delete</Button>
+                        <Button variant="none" class="border-(--primary)! border-0! hover:border! bg-white/20!"
+                            size="sm" @click.stop="handleRestore(row.id)">Restore</Button>
+                        <Button variant="danger" size="sm" @click.stop="handleDelete(row.id)">🗑️</Button>
                     </div>
                 </template>
             </DataTable>

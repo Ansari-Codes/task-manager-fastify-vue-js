@@ -78,9 +78,14 @@ defineProps({
 }
 
 .btn-danger {
-  background: transparent;
+  background: rgba(247, 0, 0, 0.25);
   color: var(--failure);
   border: 1px solid rgba(239, 68, 68, 0.12);
+}
+
+.btn-danger:hover {
+  border-color: rgb(247, 0, 0);
+  background: rgba(247, 0, 0, 0.15);
 }
 
 .btn-disabled {

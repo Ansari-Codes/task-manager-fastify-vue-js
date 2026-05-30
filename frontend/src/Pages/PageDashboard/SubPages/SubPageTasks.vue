@@ -1,5 +1,6 @@
 <script setup>
 import { ref, reactive, onMounted, computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import CompCreateEditDialog from '../../../Components/DashboardComps/CompTasks/CompCreateEditDialog.vue'
 import CompQueryDialog from '../../../Components/DashboardComps/CompTasks/CompQueryDialog.vue'
 import CompTask from '../../../Components/DashboardComps/CompTasks/CompTask.vue'
@@ -8,6 +9,9 @@ import CompContent from '../../../Components/DashboardComps/CompContent.vue'
 import Button from '../../../Widgets/Button.vue'
 import { getTasks, trashTask, filterTasks } from '../../../Functions/funTasks.js'
 
+const route = useRoute()
+const router = useRouter()
+
 const dialogVisible = ref(false)
 const queryDialogVisible = ref(false)
 const isEditMode = ref(false)
@@ -15,10 +19,15 @@ const currentTask = ref(null)
 const viewDialogValue = ref(false)
 const tasks = reactive([])
 const viewingTask = ref(null)
-const activeFilters = ref({})
 
 onMounted(async () => {
-    await loadTasks()
+    // Apply filters from URL query params on load
+    const urlFilters = { ...route.query }
+    if (Object.keys(urlFilters).length > 0) {
+        await applyFilters(urlFilters)
+    } else {
+        await loadTasks()
+    }
 })
 
 async function loadTasks() {
@@ -31,7 +40,7 @@ async function loadTasks() {
 
 const visibleTasks = computed(() => tasks.filter(t => t.status !== 'trashed'))
 const trashedCount = computed(() => tasks.filter(t => t.status === 'trashed').length)
-const hasActiveFilters = computed(() => Object.keys(activeFilters.value).length > 0)
+const hasActiveFilters = computed(() => Object.keys(route.query).length > 0)
 
 function openCreateDialog() {
     isEditMode.value = false
@@ -85,7 +94,12 @@ function handleEditFromView(task) {
 }
 
 async function handleFilter(filters) {
-    activeFilters.value = filters
+    // Update URL query params
+    await router.replace({ query: filters })
+    await applyFilters(filters)
+}
+
+async function applyFilters(filters) {
     const response = await filterTasks(filters)
     if (response.success && response.data?.tasks) {
         tasks.length = 0
@@ -94,7 +108,7 @@ async function handleFilter(filters) {
 }
 
 async function clearFilters() {
-    activeFilters.value = {}
+    await router.replace({ query: {} })
     await loadTasks()
 }
 </script>

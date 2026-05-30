@@ -3,6 +3,7 @@ const cors = require('@fastify/cors')
 
 const authRoutes = require('./Routes/Auth.route')
 const tasksRoutes = require('./Routes/Tasks.route')
+const settingsRoutes = require('./Routes/UserSettings.route')
 
 const fastify = Fastify({
     logger: true
@@ -25,6 +26,10 @@ async function start() {
             prefix: '/tasks'
         })
 
+        await fastify.register(settingsRoutes, {
+            prefix: '/settings'
+        })
+    
         fastify.get('/', async (request, reply) => {
             return {
                 message: 'Hello World'
