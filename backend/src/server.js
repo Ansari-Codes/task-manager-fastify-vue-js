@@ -4,6 +4,7 @@ const cors = require('@fastify/cors')
 const authRoutes = require('./Routes/Auth.route')
 const tasksRoutes = require('./Routes/Tasks.route')
 const settingsRoutes = require('./Routes/UserSettings.route')
+const statsRoutes = require('./Routes/stats.routes')
 
 const fastify = Fastify({
     logger: true
@@ -35,6 +36,8 @@ async function start() {
                 message: 'Hello World'
             }
         })
+
+        fastify.register(statsRoutes)
 
         await fastify.listen({
             port: 4000
