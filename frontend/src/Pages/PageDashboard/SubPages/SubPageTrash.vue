@@ -130,7 +130,7 @@ function titlize(str) {
 <template>
     <CompContent>
         <template #header>
-            <div class="flex justify-between items-center">
+            <div class="flex w-full justify-between items-center">
                 <h1 class="text-2xl font-bold text-slate-100">Trash</h1>
                 <div class="flex gap-3 items-center">
                     <Input id="trash-search" v-model="searchQuery" placeholder="Search titles..." class="w-64" />

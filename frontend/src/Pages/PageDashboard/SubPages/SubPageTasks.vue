@@ -116,7 +116,7 @@ async function clearFilters() {
 <template>
     <CompContent>
         <template #header>
-            <div class="flex justify-between items-center">
+            <div class="flex w-full justify-between items-center">
                 <h1 class="text-2xl font-bold text-slate-100">My Tasks</h1>
                 <div class="flex gap-3">
                     <Button v-if="hasActiveFilters" variant="ghost" @click="clearFilters">
@@ -126,7 +126,7 @@ async function clearFilters() {
                         Filter
                     </Button>
                     <Button variant="primary" @click="openCreateDialog">
-                        + New Task
+                        + New
                     </Button>
                 </div>
             </div>

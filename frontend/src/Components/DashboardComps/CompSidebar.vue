@@ -28,13 +28,13 @@ async function handleLogout() {
 
 <template>
   <aside :class="[
-    'fixed md:relative top-0 left-0 z-50 h-screen w-60 bg-black border-r border-(--primary) flex flex-col overflow-y-auto transition-all duration-300',
-    sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
+    'top-0 left-0 z-50 h-screen w-60 bg-black border-r border-(--primary) flex flex-col overflow-y-auto transition-all duration-300',
+    sidebarOpen ? 'fixed md:relative translate-x-0' : 'fixed -translate-x-full'
   ]">
     <div class="w-full flex items-center justify-between px-4 py-5 border-b border-(--primary)">
       <div class="text-white font-bold text-xl">TaskManager</div>
       <!-- Close button for mobile -->
-      <button class="md:hidden text-white p-2 hover:bg-white/10" @click="closeSidebar">✕</button>
+      <button class="text-white p-2 hover:bg-white/10 md:hidden" @click="closeSidebar">✕</button>
     </div>
 
     <nav class="flex-1 flex flex-col gap-2 p-2">

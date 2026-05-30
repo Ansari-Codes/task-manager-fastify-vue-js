@@ -24,7 +24,10 @@ const completedTasks = computed(() => tasks.value.filter(t => t.status === 'done
 </script>
 
 <template>
-    <CompContent header-title="Analytics">
+    <CompContent>
+        <template #header>
+            <h1 class="text-2xl font-bold text-slate-100">Analytics</h1>
+        </template>
         <div v-if="loading" class="text-center text-slate-400 py-20">Loading analytics…</div>
 
         <div v-else class="space-y-6">
