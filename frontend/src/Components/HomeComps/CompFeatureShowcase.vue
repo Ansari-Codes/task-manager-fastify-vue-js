@@ -41,7 +41,7 @@ const features = [
 </script>
 
 <template>
-  <section id="features" class="relative py-24 md:py-32">
+  <section id="features" class="relative py-24 md:py-32 border-(--primary) border-b">
     <div class="max-w-7xl mx-auto px-6 md:px-4">
       <div class="text-center mb-20">
         <div class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-medium uppercase tracking-widest mb-6">
@@ -80,7 +80,7 @@ const features = [
           <!-- Preview -->
           <div :class="feature.align === 'right' ? 'lg:order-1 lg:direction-ltr' : ''" class="relative group">
             <div class="absolute -inset-4 bg-linear-to-r from-cyan-500 to-indigo-500 blur-xl opacity-10 items-center justify-center group-hover:opacity-100 transition-opacity duration-500"/>
-            <div class="relative flex items-center justify-center bg-[#0f172a] border border-white/10 rounded-lg overflow-hidden shadow-xl hover:shadow-cyan-500/5 transition-shadow duration-500">
+            <div class="relative flex items-center justify-center bg-[#0f172a] border border-white/10 overflow-hidden shadow-xl hover:shadow-cyan-500/5 transition-shadow duration-500">
               <Icon :name="feature.preview" size="400" class="w-full h-auto"/>
             </div>
           </div>

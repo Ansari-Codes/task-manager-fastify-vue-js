@@ -5,7 +5,7 @@ import AnimatedGrid from '../../Widgets/AnimatedGrid.vue'
 </script>
 
 <template>
-  <section class="relative min-h-screen flex items-center overflow-hidden pt-20">
+  <section class="relative min-h-screen flex items-center overflow-hidden pt-20 border-(--primary) border-b">
     <AnimatedGrid />
 
     <!-- Floating orbs -->

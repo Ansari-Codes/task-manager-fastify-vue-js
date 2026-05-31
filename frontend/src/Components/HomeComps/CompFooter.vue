@@ -4,7 +4,7 @@ const year = new Date().getFullYear()
 </script>
 
 <template>
-  <footer class="relative border-t border-white/10 bg-[#050d1a]">
+  <footer class="relative border-t border-(--primary) bg-[#050d1a]">
     <div class="p-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-6">
       <div class="text-slate-600 text-sm">
         © {{ year }} QuickTaskManager. Open source under MIT.
