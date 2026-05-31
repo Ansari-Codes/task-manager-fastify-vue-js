@@ -33,65 +33,48 @@ onUnmounted(() => window.removeEventListener('scroll', handleScroll))
         <div class="w-9 h-9 flex items-center justify-center bg-cyan-500/10 border border-cyan-500/20">
           <Icon name="logo" size="28" />
         </div>
-        <span class="text-white font-bold text-xl tracking-tight">Quick Task Manager</span>
+        <a href='/'><span class="text-white font-bold text-xl tracking-tight cursor-pointer">Quick Task
+            Manager</span></a>
       </div>
 
       <!-- Desktop nav buttons -->
       <div class="hidden md:flex items-center gap-3">
-        <LinkButton to="#features" :router_link="false">Features</LinkButton>
-        <LinkButton to="https://github.com/Ansari-Codes/task-manager-fastify-vue-js" :router_link="false" target="_blank">
+        <LinkButton to="/">Home</LinkButton>
+        <LinkButton to="/about">About</LinkButton>
+        <LinkButton to="https://github.com/Ansari-Codes/task-manager-fastify-vue-js" :router_link="false"
+          target="_blank">
           GitHub
         </LinkButton>
-        <LinkButton to="/login">Login</LinkButton>
+        <LinkButton to="/login" variant="primary">Login</LinkButton>
         <LinkButton to="/signup" variant="primary">SignUp</LinkButton>
       </div>
 
       <!-- Mobile hamburger button -->
-      <button
-        @click="toggleMenu"
+      <button @click="toggleMenu"
         class="md:hidden w-10 h-10 flex items-center justify-center bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors"
-        :aria-expanded="menuOpen"
-        aria-label="Toggle menu"
-      >
+        :aria-expanded="menuOpen" aria-label="Toggle menu">
         <Icon :name="menuOpen ? 'x' : 'menu'" size="20" />
       </button>
     </div>
 
     <!-- Mobile dropdown menu -->
-    <div
-      v-if="menuOpen"
-      class="md:hidden absolute top-full left-0 right-0 bg-[#071427]/95 backdrop-blur-xl border-b-2 border-(--primary) shadow-xl shadow-black/20"
-    >
+    <div v-if="menuOpen"
+      class="md:hidden absolute top-full left-0 right-0 bg-[#071427]/95 backdrop-blur-xl border-b-2 border-(--primary) shadow-xl shadow-black/20">
       <div class="max-w-7xl mx-auto px-6 py-4 flex flex-col gap-3">
-        <LinkButton
-          to="#features"
-          :router_link="false"
-          class="w-full justify-center"
-          @click="closeMenu"
-        >
-          Features
+        <LinkButton to="/" class="w-full justify-center" @click="closeMenu">
+          Home
         </LinkButton>
-        <LinkButton
-          to="https://github.com/Ansari-Codes/task-manager-fastify-vue-js"
-          :router_link="false"
-          class="w-full justify-center"
-          @click="closeMenu"
-        >
+        <LinkButton to="/about" class="w-full justify-center" @click="closeMenu">
+          About
+        </LinkButton>
+        <LinkButton to="https://github.com/Ansari-Codes/task-manager-fastify-vue-js" :router_link="false"
+          class="w-full justify-center" @click="closeMenu">
           GitHub
         </LinkButton>
-        <LinkButton
-          to="/login"
-          class="w-full justify-center"
-          @click="closeMenu"
-        >
+        <LinkButton to="/login" variant="primary" class="w-full justify-center" @click="closeMenu">
           Login
         </LinkButton>
-        <LinkButton
-          to="/signup"
-          variant="primary"
-          class="w-full justify-center"
-          @click="closeMenu"
-        >
+        <LinkButton to="/signup" variant="primary" class="w-full justify-center" @click="closeMenu">
           SignUp
         </LinkButton>
       </div>
