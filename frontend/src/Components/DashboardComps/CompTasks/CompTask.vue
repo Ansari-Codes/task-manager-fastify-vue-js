@@ -83,6 +83,17 @@ function getPriorityBorderClass(priority) {
     return borders[priority] || 'border-gray-500'
 }
 
+function getPriorityTextClass(priority) {
+    const borders = {
+        'optional': 'text-gray-500!',
+        'low': 'text-green-500!',
+        'medium': 'text-blue-500!',
+        'high': 'text-red-500!',
+        'critical': 'text-red-600!',
+        'completed': 'text-(--primary)!'
+    }
+    return borders[priority] || 'text-gray-500'
+}
 // Card background: critical gets translucent red, overdue gets translucent yellow
 function getCardBgClass(task) {
     // Critical priority → translucent red bg
@@ -157,7 +168,7 @@ function formatDeadline(deadline) {
             <template #header>
                 <div class="pr-6">
                     <div class="flex items-center gap-2 flex-wrap mb-2">
-                        <h3 class="text-sm font-bold text-(--primary) uppercase tracking-wide">{{ task.title }}</h3>
+                        <h3 :class="[`text-sm font-bold text-(--primary) uppercase tracking-wide`,task.status !== 'done' ? getPriorityTextClass(task.priority) : 'text-(--primary)!']">{{ task.title }}</h3>
                         <span class="text-[10px] px-1.5 py-0.5 border font-semibold uppercase tracking-wider"
                             :class="[getStatusConfig(task.status).bg, getStatusConfig(task.status).text, getStatusConfig(task.status).border]">
                             {{ getStatusConfig(task.status).label }}
