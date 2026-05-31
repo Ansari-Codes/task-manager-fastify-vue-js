@@ -77,7 +77,8 @@ function getPriorityBorderClass(priority) {
         'low': 'border-green-500!',
         'medium': 'border-blue-500!',
         'high': 'border-red-500!',
-        'critical': 'border-red-600!'
+        'critical': 'border-red-600!',
+        'completed': 'border-(--primary)!'
     }
     return borders[priority] || 'border-gray-500'
 }
@@ -85,11 +86,11 @@ function getPriorityBorderClass(priority) {
 // Card background: critical gets translucent red, overdue gets translucent yellow
 function getCardBgClass(task) {
     // Critical priority → translucent red bg
-    if (task.priority === 'critical') {
+    if (task.priority === 'critical' && task.status !== 'done') {
         return 'bg-red-900!'
     }
     // Overdue → translucent yellow bg
-    if (isOverdue(task.deadline)) {
+    if (isOverdue(task.deadline) && task.status !== 'done') {
         return 'bg-yellow-100/10!'
     }
     return 'bg-transparent'
@@ -117,7 +118,7 @@ function formatDeadline(deadline) {
         <Card
             class="border-2 rounded-none transition-colors duration-150"
             :class="[
-                getPriorityBorderClass(task.priority),
+                getPriorityBorderClass(task.status === 'done' ? 'completed' : task.priority),
                 getCardBgClass(task)
             ]"
             @contextmenu="handleContextMenu"
