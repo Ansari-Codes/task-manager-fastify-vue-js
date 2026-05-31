@@ -61,7 +61,7 @@ import AnimatedGrid from '../../Widgets/AnimatedGrid.vue'
               <div class="w-3 h-3 rounded-full bg-red-500/60"/>
               <div class="w-3 h-3 rounded-full bg-yellow-500/60"/>
               <div class="w-3 h-3 rounded-full bg-green-500/60"/>
-              <div class="ml-4 text-xs text-slate-600 font-mono">taskmanager.app/dashboard</div>
+              <div class="ml-4 text-xs text-slate-600 font-mono">/dashboard</div>
             </div>
             <div class="p-6 space-y-4">
               <div class="flex items-center justify-between">
@@ -81,7 +81,7 @@ import AnimatedGrid from '../../Widgets/AnimatedGrid.vue'
                     i === 2 ? 'bg-yellow-500/10 text-yellow-400' : 
                     'bg-cyan-500/10 text-cyan-400'
                   ]">
-                    {{ ['Done', 'In Progress', 'Pending', 'Later'][i-1] }}
+                    {{ ['Done', 'In Progress', 'Pending', 'Optional'][i-1] }}
                   </div>
                 </div>
               </div>
