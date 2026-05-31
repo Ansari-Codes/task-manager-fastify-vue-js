@@ -33,7 +33,7 @@ onUnmounted(() => window.removeEventListener('scroll', handleScroll))
         <div class="w-9 h-9 flex items-center justify-center bg-cyan-500/10 border border-cyan-500/20">
           <Icon name="logo" size="28" />
         </div>
-        <span class="text-white font-bold text-xl tracking-tight">TaskManager</span>
+        <span class="text-white font-bold text-xl tracking-tight">Quick Task Manager</span>
       </div>
 
       <!-- Desktop nav buttons -->

@@ -32,7 +32,7 @@ async function handleLogout() {
     sidebarOpen ? 'fixed md:relative translate-x-0' : 'fixed -translate-x-full'
   ]">
     <div class="w-full flex items-center justify-between px-4 py-5 border-b border-(--primary)">
-      <div class="text-white font-bold text-xl">TaskManager</div>
+      <div class="text-white font-bold text-xl">Quick Task Manager</div>
       <!-- Close button for mobile -->
       <button class="text-white p-2 hover:bg-white/10 md:hidden" @click="closeSidebar">✕</button>
     </div>
