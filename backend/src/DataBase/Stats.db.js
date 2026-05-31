@@ -85,6 +85,18 @@ function getOverdueTasksCount() {
     ).get()
     return row.count
 }
+function getAverageTasksPerDay() {
+    const row = db.prepare(
+        `SELECT 
+       CASE 
+         WHEN COUNT(DISTINCT DATE(created_at)) = 0 THEN 0 
+         ELSE CAST(COUNT(*) AS FLOAT) / COUNT(DISTINCT DATE(created_at)) 
+       END as avg 
+     FROM ${tables.Tasks}`
+    ).get()
+
+    return parseFloat(row.avg.toFixed(2))
+}
 
 module.exports = {
     getTotalTasks,
@@ -97,5 +109,6 @@ module.exports = {
     getTasksCreatedThisMonth,
     getTrashedTasksCount,
     getAverageTasksPerUser,
-    getOverdueTasksCount
+    getOverdueTasksCount,
+    getAverageTasksPerDay
 }

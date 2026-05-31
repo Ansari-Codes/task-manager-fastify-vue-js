@@ -12,6 +12,7 @@ function getSoftwareStats() {
     const trashedCount = StatsDB.getTrashedTasksCount()
     const avgTasksPerUser = StatsDB.getAverageTasksPerUser()
     const overdueCount = StatsDB.getOverdueTasksCount()
+    const avgTasksPerDay = StatsDB.getAverageTasksPerDay()
 
     // Build status breakdown object
     const statusBreakdown = {}
@@ -36,7 +37,8 @@ function getSoftwareStats() {
         avgTasksPerUser,
         overdueCount,
         statusBreakdown,
-        priorityBreakdown
+        priorityBreakdown,
+        avgTasksPerDay
     }
 }
 

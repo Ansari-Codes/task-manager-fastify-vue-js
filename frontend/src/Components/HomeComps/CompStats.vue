@@ -17,11 +17,12 @@ onMounted(async () => {
     try {
         const response = await getSoftwareStats()
         const res = response.data
+        console.log(res.stats)
         if (response.success) {
             stats.value = {
                 totalTasks: res.stats.totalTasks || 0,
                 totalUsers: res.stats.totalUsers || 0,
-                tasksToday: res.stats.tasksToday || 0,
+                tasksToday: res.stats.avgTasksPerDay || 0,
                 tasksThisWeek: res.stats.tasksThisWeek || 0,
                 avgTasksPerUser: res.stats.avgTasksPerUser || 0,
                 loading: false,
@@ -50,7 +51,7 @@ onMounted(async () => {
       <div v-else class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
         <StatCounter :value="stats.totalTasks" suffix="+" label="Tasks Created"/>
         <StatCounter :value="stats.totalUsers" suffix="+" label="Active Users"/>
-        <StatCounter :value="stats.tasksToday" suffix="" label="Tasks Today"/>
+        <StatCounter :value="stats.tasksToday" suffix="" label="Avg. Tasks/Day"/>
         <StatCounter :value="stats.tasksThisWeek" suffix="" label="This Week"/>
       </div>
     </div>
