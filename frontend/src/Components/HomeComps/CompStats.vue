@@ -39,7 +39,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <section class="relative py-16 border-y border-white/5 bg-white/[0.01]">
+  <section class="relative py-16 border-y border-white/5 bg-white/1">
     <div class="max-w-7xl mx-auto px-6 md:px-4">
       <div v-if="stats.loading" class="flex justify-center py-8">
         <div class="w-8 h-8 border-2 border-cyan-500/30 border-t-cyan-400 rounded-full animate-spin"/>

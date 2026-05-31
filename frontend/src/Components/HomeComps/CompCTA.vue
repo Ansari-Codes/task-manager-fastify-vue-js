@@ -23,7 +23,7 @@ import Icon from '../../Widgets/Icon.vue'
           Get Started Free
           <Icon name="arrow-right" size="18" class="ml-2"/>
         </LinkButton>
-        <LinkButton to="https://github.com" external class="text-base px-10 py-4 gap-2">
+        <LinkButton to="https://github.com/Ansari-Codes/task-manager-fastify-vue-js" :router_link="false" class="w-full text-base" target="_blank">
           <Icon name="github" size="18"/>
           View on GitHub
         </LinkButton>

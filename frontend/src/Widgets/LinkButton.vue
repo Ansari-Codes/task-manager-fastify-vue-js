@@ -2,51 +2,63 @@
 import { RouterLink } from 'vue-router'
 
 const props = defineProps({
-  to: {
-    type: [String, Object],
-    required: true
-  },
-  variant: {
-    type: String,
-    default: 'secondary',
-  },
-  active_class: {
-    type: String,
-    default: ''
-  },
-  router_link: {
-    type: Boolean,
-    default: true
-  }
+  to: { type: [String, Object], required: true },
+  variant: { type: String, default: 'secondary' },
+  activeclass: { type: String, default: '' },
+  target: { type: String, default: '_self' },
+  router_link: { type: Boolean, default: true }
 })
+
 const variants = ['primary', 'secondary']
 </script>
 
 <template>
-  <RouterLink :to="to" v-if="router_link" custom v-slot="{ navigate, isActive }">
-    <button type="button" @click="navigate" :class="[
-      'btn w-full',
-      variants.includes(variant)
-        ? `btn-${variant}`
-        : '',
-      isActive && 'btn-active'
-    ]">
+  <!-- RouterLink for internal single-page navigation -->
+  <RouterLink 
+    :to="to" 
+    v-if="router_link" 
+    custom 
+    v-slot="{ navigate, isActive, href }"
+  >
+    <a 
+      v-if="target === '_blank'" 
+      :href="href" 
+      :target="target" 
+      rel="noopener noreferrer" 
+      class="w-full"
+    >
+      <button 
+        type="button" 
+        :class="[
+          'btn w-full',
+          variants.includes(variant) ? `btn-${variant}` : '',
+          isActive && 'btn-active'
+        ]"
+      >
+        <slot />
+      </button>
+    </a>
+    <button 
+      v-else 
+      type="button" 
+      @click="navigate" 
+      :class="[
+        'btn w-full',
+        variants.includes(variant) ? `btn-${variant}` : '',
+        isActive && 'btn-active'
+      ]"
+    >
       <slot />
     </button>
   </RouterLink>
-  <a v-else :href="to" class="w-full">
-    <button type="button" @click="navigate" :class="[
-      'btn w-full',
-      variants.includes(variant)
-        ? `btn-${variant}`
-        : ''
-    ]">
+
+  <!-- Fallback for standard <a> tags or external links -->
+  <a v-else :href="to" class="w-full block" :target="target" rel="noopener noreferrer">
+    <button type="button" :class="[ 'btn w-full', variants.includes(variant) ? `btn-${variant}` : '' ]">
       <slot />
     </button>
   </a>
-
 </template>
-
 
 <style scoped>
 @reference "tailwindcss";
@@ -85,8 +97,7 @@ const variants = ['primary', 'secondary']
   position: relative;
 }
 
-.btn-primary::before,
-.btn-primary::after {
+.btn-primary::before, .btn-primary::after {
   content: '';
   position: absolute;
   inset: 0;
@@ -128,16 +139,8 @@ const variants = ['primary', 'secondary']
 }
 
 @keyframes glitchPulse {
-  0% {
-    transform: none;
-  }
-
-  50% {
-    transform: translateX(1px);
-  }
-
-  100% {
-    transform: none;
-  }
+  0% { transform: none; }
+  50% { transform: translateX(1px); }
+  100% { transform: none; }
 }
 </style>
