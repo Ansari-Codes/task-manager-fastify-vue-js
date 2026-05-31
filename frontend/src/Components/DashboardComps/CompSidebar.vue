@@ -5,6 +5,7 @@ import { useSidebarState } from '../../Functions/sidebarState.js'
 import Button from '../../Widgets/Button.vue'
 import LinkButton from '../../Widgets/LinkButton.vue'
 import { useRouter } from 'vue-router'
+import Icon from '../../Widgets/Icon.vue'
 
 const router = useRouter()
 
@@ -28,14 +29,17 @@ async function handleLogout() {
 
 <template>
   <aside :class="[
-    'top-0 left-0 z-50 h-screen w-60 bg-black border-r border-(--primary) flex flex-col overflow-y-auto transition-all duration-300',
+    'top-0 left-0 z-50 h-screen w-80 sm:w-60 bg-black border-r border-(--primary) flex flex-col overflow-y-auto transition-all duration-300',
     sidebarOpen ? 'fixed md:relative translate-x-0' : 'fixed -translate-x-full'
   ]">
-    <div class="w-full flex items-center justify-between px-4 py-5 border-b border-(--primary)">
-      <div class="text-white font-bold text-xl">Quick Task Manager</div>
+  <div class="w-full flex flex-row items-center justify-center border-b border-(--primary)">
+    <div class="w-full flex items-center justify-between px-4 py-5 ">
+      <div class="w-fit flex flex-row items-center gap-1"><Icon name="logo" />
+      <div class="text-white font-bold text-xl">QuickTaskManager</div></div>
       <!-- Close button for mobile -->
       <button class="text-white p-2 hover:bg-white/10 md:hidden" @click="closeSidebar">✕</button>
     </div>
+  </div>
 
     <nav class="flex-1 flex flex-col gap-2 p-2">
       <LinkButton v-for="item in navItems" :key="item.to" :to="item.to" class="w-full" variant="primary"
